@@ -48,7 +48,7 @@ naturelens/
 ├── Dockerfile
 ├── README.md
 └── .gitignore
-````
+
 
 ## 🚀 Installation
 

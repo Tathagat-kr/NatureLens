@@ -1,9 +1,19 @@
 {
     "name": "NatureLens",
     "short_name": "NatureLens",
+    "description": "Discover, understand and reconnect with nature.",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
+    "orientation": "portrait",
     "background_color": "#f5f2e9",
     "theme_color": "#10251a",
-    "orientation": "portrait"
+    "icons": [
+        {
+            "src": "/static/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
 }

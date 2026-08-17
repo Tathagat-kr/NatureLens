@@ -12,12 +12,20 @@
     --soft: #dce9d9;
     --line: #dfe3d8
 }
-
+html {
+    background: #f5f2e9;
+}
 body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: Inter, system-ui, sans-serif
+    font-family: Inter, system-ui, sans-serif;
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+}
+button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .app {

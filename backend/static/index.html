@@ -95,6 +95,15 @@
     </div>
     <div id="toast"></div>
     <script src="/static/app.js"></script>
+    <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/static/service-worker.js")
+            .then(() => console.log("NatureLens PWA ready"))
+            .catch(err => console.error("PWA registration failed:", err));
+    });
+}
+    </script>
 </body>
 
 </html>

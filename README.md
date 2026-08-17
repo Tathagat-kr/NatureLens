@@ -1,5 +1,3 @@
-Yep — **one single copy-paste block**, including installation, local setup, deployment, and mobile usage:
-
 ````markdown
 # 🌿 NatureLens
 

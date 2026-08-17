@@ -1,5 +1,5 @@
 from pathlib import Path
-from uuid import uuid4
+
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request, Response
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -20,19 +20,30 @@ def startup():
     init_db()
 
 
-def get_or_create_user_id(request: Request, response: Response):
-    user_id = request.cookies.get(COOKIE_NAME)
+from uuid import uuid4
+
+USER_HEADER = "X-User-ID"
+
+
+def get_or_create_user_id(request: Request, response: Response) -> str:
+    user_id = request.headers.get(USER_HEADER)
+
+    if not user_id:
+        user_id = request.cookies.get("naturelens_user_id")
+
     if not user_id:
         user_id = str(uuid4())
-        response.set_cookie(
-            key=COOKIE_NAME,
-            value=user_id,
-            max_age=60 * 60 * 24 * 365,
-            httponly=True,
-            samesite="lax",
-            secure=request.url.scheme == "https",
-            path="/",
-        )
+
+    response.set_cookie(
+        key="naturelens_user_id",
+        value=user_id,
+        max_age=60 * 60 * 24 * 365,
+        httponly=True,
+        samesite="lax",
+        secure=True,
+        path="/",
+    )
+
     return user_id
 
 
@@ -74,3 +85,11 @@ def create_observation(
 def observations(request: Request, response: Response):
     user_id = get_or_create_user_id(request, response)
     return {"success": True, "data": get_observations(user_id)}
+
+@app.get("/api/me")
+def me(request: Request, response: Response):
+    user_id = get_or_create_user_id(request, response)
+
+    return {
+        "user_id": user_id
+    }

@@ -8,11 +8,21 @@ $("file").onchange = async () => {
     $("discover").disabled = true; $("discover").textContent = "🌿 Looking closer...";
     try {
         const fd = new FormData(); fd.append("image", f);
-        const r = await fetch("/api/analyze", { method: "POST", body: fd }); const j = await r.json();
+        const r = await fetch("/api/analyze", { method: "POST",headers: {"X-User-ID": getUserId()}, body: fd }); const j = await r.json();
         if (!r.ok || !j.success) throw Error(j.detail || "Analysis failed");
         current = j.data; showResult(current, f);
     } catch (e) { toast(e.message) } finally { $("discover").disabled = false; $("discover").textContent = "📷 Discover nature"; $("file").value = "" }
 };
+function getUserId() {
+    let userId = localStorage.getItem("naturelens_user_id");
+
+    if (!userId) {
+        userId = crypto.randomUUID();
+        localStorage.setItem("naturelens_user_id", userId);
+    }
+
+    return userId;
+}
 
 function showResult(d, f) {
     $("name").textContent = d.name || "Nature discovery"; $("scientific").textContent = d.scientific_name || "";
@@ -30,7 +40,7 @@ $("close").onclick = close; $("backdrop").onclick = close;
 $("save").onclick = async () => {
     if (!current) return; $("save").disabled = true; $("save").textContent = "Saving...";
     try {
-        const r = await fetch("/api/observations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(current) });
+        const r = await fetch("/api/observations", { method: "POST", headers: { "Content-Type": "application/json","X-User-ID": getUserId() }, body: JSON.stringify(current) });
         const j = await r.json(); if (!r.ok || !j.success) throw Error(j.detail || "Could not save");
         close(); toast(`✨ +${Number(current.xp_reward) || 10} XP · Discovery saved!`); load();
     } catch (e) { toast(e.message) } finally { $("save").disabled = false; $("save").textContent = "✓ Save discovery" }
@@ -38,7 +48,7 @@ $("save").onclick = async () => {
 
 async function load() {
     try {
-        const r = await fetch("/api/observations"), j = await r.json(); if (!r.ok || !j.success) throw Error("Could not load discoveries");
+        const r = await fetch("/api/observations",{headers: {"X-User-ID": getUserId()}}), j = await r.json(); if (!r.ok || !j.success) throw Error("Could not load discoveries");
         const a = j.data || [], xp = a.reduce((s, x) => s + (Number(x.xp_reward) || 0), 0);
         $("total").textContent = `${a.length} total`; $("countPill").textContent = `🌿 ${a.length} ${a.length === 1 ? "discovery" : "discoveries"}`;
         $("xp").textContent = xp; $("plants").textContent = a.filter(x => x.category === "plant").length;

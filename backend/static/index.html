@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#10251a">
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+    <title>NatureLens</title>
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <div><b>NatureLens</b><small>Look closer.</small></div><span id="countPill">🌿 0 discoveries</span>
+        </header>
+        <main>
+            <section class="hero">
+                <p>YOUR NATURE COMPANION</p>
+                <h1>There is more life<br>around you than you notice.</h1>
+                <div>Point your camera at something living. Discover what it is, why it matters, and what to look for
+                    next.</div>
+                <button id="discover">📷 Discover nature</button>
+                <input id="file" type="file" accept="image/*" capture="environment" hidden>
+            </section>
+
+            <section class="mission">
+                <div>🔎</div>
+                <article><label>TODAY'S MISSION</label>
+                    <h2 id="dailyMission">Find something alive that you normally walk past.</h2><small>Look up from your
+                        screen. Your next discovery may be closer than you think.</small>
+                </article>
+            </section>
+
+            <section>
+                <div class="heading">
+                    <h2>Your progress</h2><span id="total">0 total</span>
+                </div>
+                <div class="stats">
+                    <div><span>⭐</span><b id="xp">0</b><small>XP</small></div>
+                    <div><span>🌳</span><b id="plants">0</b><small>plants</small></div>
+                    <div><span>🦋</span><b id="animals">0</b><small>animals</small></div>
+                </div>
+                <div class="level">
+                    <label>NATURE LEVEL</label>
+                    <h3 id="level">🌱 Beginner</h3>
+                    <div class="bar"><i id="bar"></i></div><small id="levelText">0 / 100 XP to Explorer</small>
+                </div>
+            </section>
+
+            <section>
+                <div class="heading">
+                    <h2>Recent discoveries</h2><button id="refresh">Refresh</button>
+                </div>
+                <div id="list" class="list">
+                    <div class="empty">🌱<br><small>Your discoveries will appear here.</small></div>
+                </div>
+            </section>
+        </main>
+        <nav><button class="active">🌿<small>Discover</small></button><button
+                id="missionNav">🎯<small>Missions</small></button><button id="historyNav">📖<small>My
+                    Nature</small></button></nav>
+    </div>
+
+    <div id="modal" class="modal hidden">
+        <div id="backdrop"></div>
+        <div class="sheet">
+            <button id="close" class="close">×</button><img id="photo">
+            <div class="content">
+                <label>YOU DISCOVERED</label>
+                <h2 id="name">Nature</h2><i id="scientific"></i><span id="confidence" class="confidence"></span>
+                <p id="description"></p>
+                <div class="box"><b>🌎 Why it matters</b>
+                    <p id="role"></p>
+                </div>
+                <div class="box fact"><b>💡 Did you know?</b>
+                    <p id="fact"></p>
+                </div>
+                <div class="box"><b>👀 Look closer</b>
+                    <p id="look"></p>
+                </div>
+                <div class="missionResult"><label>YOUR NEXT MISSION</label>
+                    <h3 id="mission"></h3>
+                    <div><span id="missionType">observe</span><b id="reward">+10 XP</b></div>
+                </div>
+                <div class="connection"><b>🔗 Your connection</b>
+                    <p id="connection"></p>
+                </div>
+                <p id="safety" class="safety hidden"></p>
+                <button id="save" class="save">✓ Save discovery</button>
+            </div>
+        </div>
+    </div>
+    <div id="toast"></div>
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

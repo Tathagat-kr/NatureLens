@@ -211,6 +211,3 @@ NatureLens uses AI as the starting point for curiosity, then encourages users to
 ---
 
 **Built with ❤️ for reconnecting people with nature.**
-
-```
-```

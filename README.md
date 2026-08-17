@@ -1,4 +1,4 @@
-````markdown
+
 # 🌿 NatureLens
 
 > **Look closer. Reconnect with nature.**
